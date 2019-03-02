@@ -11,8 +11,14 @@ class App extends Component {
         <Router>
           <Route
             path="/"
-            render={({ history }) => (
-              <Folder name="my-laptop" path="/my-laptop" history={history} />
+            render={({ history, location, match }) => (
+              <Folder
+                history={history}
+                match={match}
+                location={location}
+                name="my-laptop"
+                path="/my-laptop"
+              />
             )}
           />
         </Router>

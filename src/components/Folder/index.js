@@ -23,13 +23,26 @@ const propTypes = {
     length: PropTypes.number,
     replace: PropTypes.func,
   }).isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string,
+    path: PropTypes.string,
+    params: PropTypes.object,
+    isExact: PropTypes.bool,
+  }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    hash: PropTypes.string,
+    state: PropTypes.object,
+    search: PropTypes.string,
+  }),
 };
 
 class Folder extends React.Component {
   onOpenFolder = () => {
-    const { history, path } = this.props;
-    history.push(path);
-    console.log("HISTORY", history);
+    const { path, history, match, location } = this.props;
+    if (location.pathname === match.url) return history.push(path);
+    // Closing folder (going back up to parent url/path)
+    return history.push(match.url);
   };
 
   render() {
@@ -52,7 +65,7 @@ class Folder extends React.Component {
           {name}
         </button>
 
-        <Route path={path} render={() => <h1> Folder Content </h1>} />
+        <Route path={`${path}`} render={() => <h1> Folder Content </h1>} />
       </Fragment>
     );
   }
