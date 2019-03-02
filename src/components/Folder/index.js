@@ -6,6 +6,7 @@
 
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import { Route } from "react-router-dom";
 
 const propTypes = {
   path: PropTypes.string.isRequired,
@@ -32,7 +33,7 @@ class Folder extends React.Component {
   };
 
   render() {
-    const { name, history } = this.props;
+    const { path, name } = this.props;
 
     return (
       <Fragment>
@@ -50,6 +51,8 @@ class Folder extends React.Component {
         >
           {name}
         </button>
+
+        <Route path={path} render={() => <h1> Folder Content </h1>} />
       </Fragment>
     );
   }
