@@ -11,7 +11,6 @@ export const fetchFolderContent = async path => {
     if (i === 0) {
       tempFolderContent = mockDB.children;
     } else {
-      // eslint-disable-next-line prettier/prettier
       const nextFolder = tempFolderContent.find(
         item => item.name === currentPathName,
       );

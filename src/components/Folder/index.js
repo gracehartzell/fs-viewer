@@ -41,6 +41,7 @@ const propTypes = {
 class Folder extends React.Component {
   onOpenFolder = () => {
     const { path, history, match, location } = this.props;
+    // If location pathname (URL) matches match.url (arent routes path) are the same: OPEN DIRECTORY
     if (location.pathname === match.url) return history.push(path);
     // Closing folder (going back up to parent url/path)
     return history.push(match.url);
@@ -69,7 +70,13 @@ class Folder extends React.Component {
         <Route
           path={`${path}`}
           render={({ history, match, location }) => (
-            <FolderContent name={name} />
+            <FolderContent
+              history={history}
+              match={match}
+              location={location}
+              name={name}
+              path={path}
+            />
           )}
         />
       </Fragment>
