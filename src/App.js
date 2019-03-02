@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Folder from "./components/Folder";
 import "./App.css";
 
 class App extends Component {
@@ -10,7 +11,7 @@ class App extends Component {
         <Router>
           <Route
             path="/"
-            render={() => <h1 style={{ color: "red" }}>Has rendered!</h1>}
+            render={() => <Folder name="my-laptop" path="/my-laptop" />}
           />
         </Router>
       </div>
