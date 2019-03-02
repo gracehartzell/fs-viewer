@@ -4,7 +4,7 @@
  *
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { fetchFolderContent } from "../../api";
 import File from "../File";
@@ -41,74 +41,84 @@ const propTypes = {
   }),
 };
 
-class FolderContent extends React.Component {
-  state = { content: [], loading: false, error: null };
+const FolderContent = ({ name, depth, match, location, history, path }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [content, setContent] = useState([]);
 
-  // Fetch folder content on mount:
-  async componentDidMount() {
-    const { path } = this.props;
-    this.setState({ loading: true });
+  const fetchData = async () => {
+    setLoading(true);
     try {
-      const content = await fetchFolderContent(path);
-      this.setState({ content, loading: false });
+      /* If folder content is already in local storage, set it in state and avoid making an api call */
+      let content = JSON.parse(localStorage.getItem(path));
+      if (!content) {
+        console.warn("Made api call and set response in localStorage");
+        content = await fetchFolderContent(path);
+        localStorage.setItem(path, JSON.stringify(content));
+      }
+
+      setContent(content);
+      setLoading(false);
     } catch (error) {
-      console.warn("Something's wrong...", error);
-      this.setState({ error, loading: false });
+      console.warn("Errrrrror", error);
+      setLoading(false);
+      setError(error);
+      return;
     }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Show error if broke
+  if (error) {
+    return (
+      <p style={{ fontWeight: "bold", color: "red" }}>
+        Ooops: cound not fetch folder contents for {name}
+      </p>
+    );
+  }
+  // Show loading animation
+  if (loading) {
+    return (
+      <p
+        style={{
+          color: "white",
+          fontWeight: "bold",
+          marginLeft: `${(depth + 1) * 15}px`,
+          marginTop: "0",
+          fontSize: "11px",
+          padding: "0",
+        }}
+      >
+        Loading...
+      </p>
+    );
   }
 
-  render() {
-    const { loading, error, content } = this.state;
-    const { name, match, location, history, depth } = this.props;
-    // Show error if broken
-    if (error) {
-      return (
-        <p style={{ fontWeight: "bold", color: "red" }}>
-          Uh-Oh! Couldn't fetch folder contents for {name}!
-        </p>
-      );
-    }
-    // Show loading animation
-    if (loading) {
-      return (
-        <p
-          style={{
-            color: "white",
-            fontWeight: "bold",
-            marginTop: "0",
-            fontSize: "11px",
-            padding: "0",
-            marginLeft: `${(depth + 1) * 15}px`,
-          }}
-        >
-          Loading...
-        </p>
-      );
-    }
-
-    // Render all folder content
-    return content.map(foldOrFile => {
-      if (foldOrFile.type === "folder") {
-        return (
-          <div key={foldOrFile.name}>
-            <Folder
-              depth={depth + 1}
-              {...foldOrFile}
-              history={history}
-              location={location}
-              match={match}
-            />
-          </div>
-        );
-      }
+  // Render all folder content and chuckle at that pun
+  return content.map(foldOrFile => {
+    if (foldOrFile.type === "folder") {
       return (
         <div key={foldOrFile.name}>
-          <File depth={depth + 1} {...foldOrFile} history={history} />
+          <Folder
+            depth={depth + 1}
+            {...foldOrFile}
+            history={history}
+            location={location}
+            match={match}
+          />
         </div>
       );
-    });
-  }
-}
+    }
+    return (
+      <div key={foldOrFile.name}>
+        <File depth={depth + 1} {...foldOrFile} history={history} />
+      </div>
+    );
+  });
+};
 
 FolderContent.propTypes = propTypes;
 
