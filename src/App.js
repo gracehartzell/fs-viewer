@@ -11,7 +11,9 @@ class App extends Component {
         <Router>
           <Route
             path="/"
-            render={() => <Folder name="my-laptop" path="/my-laptop" />}
+            render={({ history }) => (
+              <Folder name="my-laptop" path="/my-laptop" history={history} />
+            )}
           />
         </Router>
       </div>
