@@ -1,5 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .App {
-  text-align: center;
   background-color: #53555e;
   min-height: 100vh;
 }

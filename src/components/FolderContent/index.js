@@ -58,9 +58,9 @@ class FolderContent extends React.Component {
   }
 
   render() {
-    const { name, match, location, history } = this.props;
     const { loading, error, content } = this.state;
-    // Show error if broke
+    const { name, match, location, history, depth } = this.props;
+    // Show error if broken
     if (error) {
       return (
         <p style={{ fontWeight: "bold", color: "red" }}>
@@ -78,9 +78,10 @@ class FolderContent extends React.Component {
             marginTop: "0",
             fontSize: "11px",
             padding: "0",
+            marginLeft: `${(depth + 1) * 15}px`,
           }}
         >
-          Loading... put spinner or something here
+          Loading...
         </p>
       );
     }
@@ -91,6 +92,7 @@ class FolderContent extends React.Component {
         return (
           <div key={foldOrFile.name}>
             <Folder
+              depth={depth + 1}
               {...foldOrFile}
               history={history}
               location={location}
@@ -101,7 +103,7 @@ class FolderContent extends React.Component {
       }
       return (
         <div key={foldOrFile.name}>
-          <File {...foldOrFile} history={history} />
+          <File depth={depth + 1} {...foldOrFile} history={history} />
         </div>
       );
     });

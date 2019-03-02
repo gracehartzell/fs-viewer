@@ -25,6 +25,6 @@ export const fetchFolderContent = async path => {
   });
 
   return await new Promise(resolve =>
-    setTimeout(() => resolve(folderContent), 500),
+    setTimeout(() => resolve(folderContent), 100),
   );
 };

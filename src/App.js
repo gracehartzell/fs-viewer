@@ -7,12 +7,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">File System Viewer</header>
+        <header className="App-header">File Tree Viewer</header>
         <Router>
           <Route
             path="/"
             render={({ history, location, match }) => (
               <Folder
+                depth={0}
                 history={history}
                 match={match}
                 location={location}

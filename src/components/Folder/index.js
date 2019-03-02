@@ -53,6 +53,7 @@ class Folder extends React.Component {
       path,
       name,
       location: { pathname },
+      depth,
     } = this.props;
     // Folder is open if the pathname(in url) includes the the current folder's path:
     const isOpen = pathname.includes(path);
@@ -67,6 +68,7 @@ class Folder extends React.Component {
             color: "white",
             padding: "0",
             marginBottom: "5px",
+            marginLeft: `${depth * 15}px`,
           }}
           onClick={this.onOpenFolder}
         >
@@ -82,6 +84,7 @@ class Folder extends React.Component {
           path={`${path}`}
           render={({ history, match, location }) => (
             <FolderContent
+              depth={depth}
               history={history}
               match={match}
               location={location}
