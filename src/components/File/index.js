@@ -5,6 +5,7 @@
  */
 import React from "react";
 import PropTypes from "prop-types";
+import { DocumentText } from "grommet-icons";
 
 const propTypes = {
   path: PropTypes.string.isRequired,
@@ -44,7 +45,7 @@ class File extends React.Component {
         }}
         onClick={this.onFileClick}
       >
-        {name}
+        <DocumentText color="white" size="small" /> {name}
       </button>
     );
   }

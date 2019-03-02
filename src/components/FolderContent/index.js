@@ -43,7 +43,7 @@ const propTypes = {
 
 class FolderContent extends React.Component {
   state = { content: [], loading: false, error: null };
-  
+
   // Fetch folder content on mount:
   async componentDidMount() {
     const { path } = this.props;

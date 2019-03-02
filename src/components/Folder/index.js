@@ -7,6 +7,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
+import { Folder as FolderClose, FolderOpen } from "grommet-icons";
 import FolderContent from "../FolderContent";
 
 const propTypes = {
@@ -48,8 +49,13 @@ class Folder extends React.Component {
   };
 
   render() {
-    const { path, name } = this.props;
-
+    const {
+      path,
+      name,
+      location: { pathname },
+    } = this.props;
+    // Folder is open if the pathname(in url) includes the the current folder's path:
+    const isOpen = pathname.includes(path);
     return (
       <Fragment>
         <button
@@ -64,6 +70,11 @@ class Folder extends React.Component {
           }}
           onClick={this.onOpenFolder}
         >
+          {isOpen ? (
+            <FolderOpen color="white" size="small" />
+          ) : (
+            <FolderClose color="white" size="small" />
+          )}{" "}
           {name}
         </button>
 
