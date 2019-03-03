@@ -17,7 +17,7 @@ normal file tree:
 
 - Opening a folder should expand it, and show folders and files inside that folder.
 - Opening a folder should append the folder name to the URL. This is similar to how
-  the file system works on your computer. /:folder1/:folder2/
+  the file system works on your computer. `/:folder1/:folder2/`
 - Closing a folder should collapse it. The URL should update by removing that folder
   name from the URL (Again, similar to how the file system path works).
 - Clicking on a file should update the URL with the file path
