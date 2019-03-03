@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3002/",
   "dependencies": {
     "eslint-plugin-prettier": "^3.0.1",
+    "file-icons-js": "github:websemantics/file-icons-js",
     "grommet-icons": "^4.2.0",
     "prettier": "^1.16.4",
     "react": "^16.8.3",

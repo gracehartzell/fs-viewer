@@ -7,7 +7,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
-import { Folder as FolderClose, FolderOpen } from "grommet-icons";
+import { StyledButton } from "../../styles/GlobalStyles";
+
 import FolderContent from "../FolderContent";
 
 const propTypes = {
@@ -59,26 +60,14 @@ class Folder extends React.Component {
     const isOpen = pathname.includes(path);
     return (
       <Fragment>
-        <button
-          style={{
-            outline: "none",
-            border: "none",
-            background: "none",
-            fontWeight: "bold",
-            color: "white",
-            padding: "0",
-            marginBottom: "5px",
-            marginLeft: `${depth * 15}px`,
-          }}
-          onClick={this.onOpenFolder}
-        >
+        <StyledButton onClick={this.onOpenFolder} depth={depth}>
           {isOpen ? (
-            <FolderOpen color="white" size="small" />
+            <i className="fas fa-folder-open medium-yellow fa-lg" />
           ) : (
-            <FolderClose color="white" size="small" />
+            <i className="fas fa-folder medium-yellow fa-lg" />
           )}{" "}
           {name}
-        </button>
+        </StyledButton>
 
         <Route
           path={`${path}`}

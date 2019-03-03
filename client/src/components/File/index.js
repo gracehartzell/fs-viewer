@@ -5,7 +5,9 @@
  */
 import React from "react";
 import PropTypes from "prop-types";
-import { DocumentText } from "grommet-icons";
+import fileIcons from "file-icons-js";
+import "file-icons-js/css/style.css";
+import { StyledButton } from "../../styles/GlobalStyles";
 
 const propTypes = {
   path: PropTypes.string.isRequired,
@@ -31,22 +33,12 @@ class File extends React.Component {
 
   render() {
     const { name, depth } = this.props;
+    const iconClass = fileIcons.getClassWithColor(name);
+    console.log("Got it?", iconClass);
     return (
-      <button
-        style={{
-          outline: "none",
-          border: "none",
-          background: "none",
-          fontWeight: "bold",
-          color: "white",
-          padding: "0",
-          marginLeft: `${depth * 15}px`,
-          marginBottom: "5px",
-        }}
-        onClick={this.onFileClick}
-      >
-        <DocumentText color="white" size="small" /> {name}
-      </button>
+      <StyledButton depth={depth} onClick={this.onFileClick}>
+        <i className={iconClass} /> {name}
+      </StyledButton>
     );
   }
 }
