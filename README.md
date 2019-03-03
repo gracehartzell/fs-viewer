@@ -2,7 +2,12 @@
 
 ## To Use
 
+- You'll need to install in both the client and root, but then run the project from the root directory as typed out below: 
+
 ```shell
+cd client
+npm install
+cd ..
 npm install
 npm start
 ```
