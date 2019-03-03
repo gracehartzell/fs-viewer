@@ -15,9 +15,10 @@ npm start
 
 - While designing layout, I wanted to make the file tree resemble the computer a
   little more closely, so I added two extra folders (the two prior to where the
-  output starts). 
+  output starts).
 
 - Ideally, I would've added tests; however, I ran out of time and pushed tests
-  towards the bottom of my triage list. 
+  towards the bottom of my triage list.
 
-- For the general server construction, I opted to add in controllers and models 
+- In order to help maximize efficiency, I added a utility to cache items in
+  local storage. 

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { fetchFolderContent } from "../../api";
 import File from "../File";
@@ -41,85 +41,70 @@ const propTypes = {
   }),
 };
 
-const FolderContent = ({ name, depth, match, location, history, path }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [content, setContent] = useState([]);
+const defaultProps = {
+  content: [],
+};
 
-  const fetchData = async () => {
-    setLoading(true);
+class FolderContent extends React.Component {
+  state = { loading: false, error: null, content: [] };
+
+  async componentDidMount() {
+    const { path } = this.props;
+    let content = JSON.parse(localStorage.getItem(path));
     try {
-      /* If folder content is already in local storage, set it in state and avoid making an api call */
-      let content = JSON.parse(localStorage.getItem(path));
+      this.setState({ loading: true });
       if (!content) {
-        console.warn("Made api call and set response in localStorage");
         content = await fetchFolderContent(path);
         localStorage.setItem(path, JSON.stringify(content));
       }
-
-      setContent(content);
-      setLoading(false);
+      this.setState({ content, loading: false });
     } catch (error) {
       console.warn("Errrrrror", error);
-      setLoading(false);
-      setError(error);
-      return;
+      this.setState({ error, loading: false });
     }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  // Show error if broke
-  if (error) {
-    return (
-      <p style={{ fontWeight: "bold", color: "red" }}>
-        Ooops: cound not fetch folder contents for {name}
-      </p>
-    );
-  }
-  // Show loading animation
-  if (loading) {
-    return (
-      <p
-        style={{
-          color: "white",
-          fontWeight: "bold",
-          marginLeft: `${(depth + 1) * 15}px`,
-          marginTop: "0",
-          fontSize: "11px",
-          padding: "0",
-        }}
-      >
-        Loading...
-      </p>
-    );
   }
 
-  // Render all folder content and chuckle at that pun
-  return content.map(foldOrFile => {
-    if (foldOrFile.type === "folder") {
+  render() {
+    const { error, content, loading } = this.state;
+    const { name, depth, history, location, match } = this.props;
+    /* Show error if broke */
+    if (error) {
       return (
-        <div key={foldOrFile.name}>
-          <Folder
-            depth={depth + 1}
-            {...foldOrFile}
-            history={history}
-            location={location}
-            match={match}
-          />
-        </div>
+        <p style={{ fontWeight: "bold", color: "red" }}>
+          Ooops: cound not fetch folder contents for {name}
+        </p>
       );
     }
-    return (
-      <div key={foldOrFile.name}>
-        <File depth={depth + 1} {...foldOrFile} history={history} />
-      </div>
-    );
-  });
-};
+    /* Show loading animation */
+    if (loading) {
+      return <p>Loading...</p>;
+    }
 
+    /* Render all folder content (subfolders and files)*/
+    return content.map(foldOrFile => {
+      if (foldOrFile.type === "folder") {
+        return (
+          <div key={foldOrFile.name}>
+            <Folder
+              depth={depth + 1}
+              {...foldOrFile}
+              history={history}
+              location={location}
+              match={match}
+            />
+          </div>
+        );
+      }
+      return (
+        <div key={foldOrFile.name}>
+          <File depth={depth + 1} {...foldOrFile} history={history} />
+        </div>
+      );
+    });
+  }
+}
+
+FolderContent.defaultProps = defaultProps;
 FolderContent.propTypes = propTypes;
 
 export default FolderContent;

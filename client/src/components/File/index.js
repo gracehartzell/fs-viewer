@@ -34,7 +34,6 @@ class File extends React.Component {
   render() {
     const { name, depth } = this.props;
     const iconClass = fileIcons.getClassWithColor(name);
-    console.log("Got it?", iconClass);
     return (
       <StyledButton depth={depth} onClick={this.onFileClick}>
         <i className={iconClass} /> {name}
