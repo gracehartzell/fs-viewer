@@ -2,7 +2,8 @@
 
 ## To Use
 
-- You'll need to install in both the client and root, but then run the project from the root directory as typed out below: 
+- You'll need to install in both the client and root, but then run the project
+  from the root directory as typed out below:
 
 ```shell
 cd client
@@ -11,6 +12,11 @@ cd ..
 npm install
 npm start
 ```
+
+## Preview
+
+<img src="./client/public/Preview.gif">
+
 
 ### About the Process
 
@@ -26,4 +32,4 @@ npm start
   towards the bottom of my triage list.
 
 - In order to help maximize efficiency, I added a utility to cache items in
-  local storage. 
+  local storage.
