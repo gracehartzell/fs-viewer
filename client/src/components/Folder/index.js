@@ -45,6 +45,8 @@ class Folder extends React.Component {
     const { path, history, match, location } = this.props;
     // If location pathname (URL) matches match.url (arent routes path) are the same: OPEN DIRECTORY
     if (location.pathname === match.url) return history.push(path);
+    // when a sibling folder is open and a folder is clicked, go to this new path
+    if (!location.pathname.includes(path)) return history.push(path);
     // Closing folder (going back up to parent url/path)
     return history.push(match.url);
   };

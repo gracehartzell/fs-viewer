@@ -59,7 +59,7 @@ class FolderContent extends React.Component {
       }
       this.setState({ content, loading: false });
     } catch (error) {
-      console.warn("Errrrrror", error);
+      console.warn("Error: ", error);
       this.setState({ error, loading: false });
     }
   }
@@ -67,11 +67,11 @@ class FolderContent extends React.Component {
   render() {
     const { error, content, loading } = this.state;
     const { name, depth, history, location, match } = this.props;
-    /* Show error if broke */
+    /* Show error if broken */
     if (error) {
       return (
         <p style={{ fontWeight: "bold", color: "red" }}>
-          Ooops: cound not fetch folder contents for {name}
+          Oops! Could not fetch folder contents for {name}
         </p>
       );
     }
